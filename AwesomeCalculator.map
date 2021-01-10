@@ -1,0 +1,27 @@
+RAM Allocation
+Variable                                                          Address   Size
+--------------------------------------------------------------------------------
+keys                                                              0x0160      32
+decoded_keys                                                      0x0180      16
+number                                                            0x0190       2
+oprand                                                            0x0192       2
+printable_number                                                  0x0194      16
+is_selecting                                                      0x01A4       2
+_base_y                                                           0x01A6       4
+_lcd_x                                                            0x01AA       1
+_lcd_y                                                            0x01AB       1
+_lcd_maxx                                                         0x01AC       1
+
+EEPROM Allocation
+Variable                                                          Address   Size
+--------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                          Register  Size
+--------------------------------------------------------------------------------
+currenct_selected_button                                          R5           1
+currenct_operator                                                 R4           1
+index                                                             R6,R7        2
+row                                                               R8,R9        2
+col                                                               R10,R11      2
+colRow                                                            R12,R13      2

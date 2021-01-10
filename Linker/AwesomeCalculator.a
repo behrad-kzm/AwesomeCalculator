@@ -1,0 +1,554 @@
+;/*****************************************************
+;This program was produced by the
+;CodeWizardAVR V2.05.0 Advanced
+;Automatic Program Generator
+;© Copyright 1998-2010 Pavel Haiduc, HP InfoTech s.r.l.
+;http://www.hpinfotech.com
+;
+;Project :
+;Version :
+;Date    : 1/9/2021
+;Author  : www.Eca.ir *** www.Webkade.ir
+;Company :
+;Comments:
+;
+;
+;Chip type               : ATmega16
+;Program type            : Application
+;AVR Core Clock frequency: 40.000000 MHz
+;Memory model            : Small
+;External RAM size       : 0
+;Data Stack size         : 256
+;*****************************************************/
+;#include <mega16.h>
+;PCODE: $00000000 VOL: 0
+	#ifndef __SLEEP_DEFINED__
+;PCODE: $00000001 VOL: 0
+	#define __SLEEP_DEFINED__
+;PCODE: $00000002 VOL: 0
+	.EQU __se_bit=0x40
+;PCODE: $00000003 VOL: 0
+	.EQU __sm_mask=0xB0
+;PCODE: $00000004 VOL: 0
+	.EQU __sm_powerdown=0x20
+;PCODE: $00000005 VOL: 0
+	.EQU __sm_powersave=0x30
+;PCODE: $00000006 VOL: 0
+	.EQU __sm_standby=0xA0
+;PCODE: $00000007 VOL: 0
+	.EQU __sm_ext_standby=0xB0
+;PCODE: $00000008 VOL: 0
+	.EQU __sm_adc_noise_red=0x10
+;PCODE: $00000009 VOL: 0
+	.SET power_ctrl_reg=mcucr
+;PCODE: $0000000A VOL: 0
+	#endif
+;PCODE: $0000000B VOL: 0
+;PCODE: $0000000C VOL: 0
+;#include <delay.h>
+;#include <alcd.h>
+;#include <stdio.h>
+;
+;//Variables
+;int keys[] = {0x28, 0x14, 0x24, 0x44, 0x12, 0x22, 0x42, 0x11, 0x21, 0x41, 0x81,  0x82, 0x84, 0x18, 0x48, 0x88};;
+
+	.DSEG
+;
+;char decoded_keys[]={'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '/', '*', '-', 'c', '=', '+'};
+;
+;unsigned char currenct_selected_button = '';
+;
+;unsigned char currenct_operator = 'c';
+;
+;int index = 0, row, col, colRow;
+;
+;int number = 0;
+;
+;int oprand = 0;
+;
+;char printable_number[16];
+;
+;int is_selecting = 0;
+;
+;void read_key(void){
+; 0000 002F void read_key(void){
+
+	.CSEG
+;PCODE: $0000000D VOL: 0
+;PCODE: $0000000E VOL: 0
+; 0000 0030 
+; 0000 0031     DDRD=0x0F;
+;PCODE: $0000000F VOL: 0
+;PCODE: $00000010 VOL: 0
+; 0000 0032     PORTD=0x0F;
+;PCODE: $00000011 VOL: 0
+;PCODE: $00000012 VOL: 0
+; 0000 0033     row=PIND;
+;PCODE: $00000013 VOL: 0
+;PCODE: $00000014 VOL: 0
+;PCODE: $00000015 VOL: 0
+; 0000 0034 
+; 0000 0035     delay_ms(1);
+;PCODE: $00000016 VOL: 0
+;PCODE: $00000017 VOL: 0
+;PCODE: $00000018 VOL: 0
+; 0000 0036 
+; 0000 0037     DDRD=0xF0;
+;PCODE: $00000019 VOL: 0
+;PCODE: $0000001A VOL: 0
+; 0000 0038     PORTD=0xF0;
+;PCODE: $0000001B VOL: 0
+;PCODE: $0000001C VOL: 0
+; 0000 0039     col=PIND;
+;PCODE: $0000001D VOL: 0
+;PCODE: $0000001E VOL: 0
+;PCODE: $0000001F VOL: 0
+; 0000 003A 
+; 0000 003B     colRow=row&col;
+;PCODE: $00000020 VOL: 0
+;PCODE: $00000021 VOL: 0
+;PCODE: $00000022 VOL: 0
+; 0000 003C 
+; 0000 003D     if (colRow==0x00){
+;PCODE: $00000023 VOL: 0
+;PCODE: $00000024 VOL: 0
+; 0000 003E         is_selecting = 0;
+;PCODE: $00000025 VOL: 0
+;PCODE: $00000026 VOL: 0
+; 0000 003F     }
+; 0000 0040 }
+;PCODE: $00000027 VOL: 0
+;PCODE: $00000028 VOL: 0
+;PCODE: $00000029 VOL: 0
+;
+;int sum(int first, int second){
+; 0000 0042 int sum(int first, int second){
+;PCODE: $0000002A VOL: 0
+;PCODE: $0000002B VOL: 0
+; 0000 0043     return first + second;
+;	first -> Y+2
+;	second -> Y+0
+;PCODE: $0000002C VOL: 0
+;PCODE: $0000002D VOL: 0
+;PCODE: $0000002E VOL: 0
+;PCODE: $0000002F VOL: 0
+;PCODE: $00000030 VOL: 0
+; 0000 0044 }
+;PCODE: $00000031 VOL: 0
+;
+;int div(int first, int second){
+; 0000 0046 int div(int first, int second){
+;PCODE: $00000032 VOL: 0
+;PCODE: $00000033 VOL: 0
+; 0000 0047     return first / second;
+;	first -> Y+2
+;	second -> Y+0
+;PCODE: $00000034 VOL: 0
+;PCODE: $00000035 VOL: 0
+;PCODE: $00000036 VOL: 0
+;PCODE: $00000037 VOL: 0
+;PCODE: $00000038 VOL: 0
+; 0000 0048 }
+;PCODE: $00000039 VOL: 0
+;
+;int min(int first, int second){
+; 0000 004A int min(int first, int second){
+;PCODE: $0000003A VOL: 0
+;PCODE: $0000003B VOL: 0
+; 0000 004B     return first - second;
+;	first -> Y+2
+;	second -> Y+0
+;PCODE: $0000003C VOL: 0
+;PCODE: $0000003D VOL: 0
+;PCODE: $0000003E VOL: 0
+;PCODE: $0000003F VOL: 0
+;PCODE: $00000040 VOL: 0
+; 0000 004C }
+;PCODE: $00000041 VOL: 0
+;
+;int mul(int first, int second){
+; 0000 004E int mul(int first, int second){
+;PCODE: $00000042 VOL: 0
+;PCODE: $00000043 VOL: 0
+; 0000 004F     return first * second;
+;	first -> Y+2
+;	second -> Y+0
+;PCODE: $00000044 VOL: 0
+;PCODE: $00000045 VOL: 0
+;PCODE: $00000046 VOL: 0
+;PCODE: $00000047 VOL: 0
+;PCODE: $00000048 VOL: 0
+; 0000 0050 }
+;PCODE: $00000049 VOL: 0
+;
+;
+;void update(void){
+; 0000 0053 void update(void){
+;PCODE: $0000004A VOL: 0
+;PCODE: $0000004B VOL: 0
+; 0000 0054     index = 0;
+;PCODE: $0000004C VOL: 0
+; 0000 0055 
+; 0000 0056     while(index < 16){
+;PCODE: $0000004D VOL: 0
+;PCODE: $0000004E VOL: 0
+;PCODE: $0000004F VOL: 0
+;PCODE: $00000050 VOL: 0
+; 0000 0057 
+; 0000 0058         if (colRow==keys[index]){
+;PCODE: $00000051 VOL: 0
+;PCODE: $00000052 VOL: 0
+;PCODE: $00000053 VOL: 0
+;PCODE: $00000054 VOL: 0
+;PCODE: $00000055 VOL: 0
+;PCODE: $00000056 VOL: 0
+;PCODE: $00000057 VOL: 0
+; 0000 0059             if (is_selecting == 1){
+;PCODE: $00000058 VOL: 0
+;PCODE: $00000059 VOL: 0
+;PCODE: $0000005A VOL: 0
+; 0000 005A                 break; //means user has not pulled up his filgers from the key.
+;PCODE: $0000005B VOL: 0
+; 0000 005B             }
+; 0000 005C 
+; 0000 005D             is_selecting = 1;
+;PCODE: $0000005C VOL: 0
+;PCODE: $0000005D VOL: 0
+;PCODE: $0000005E VOL: 0
+; 0000 005E             currenct_selected_button = decoded_keys[index];
+;PCODE: $0000005F VOL: 0
+;PCODE: $00000060 VOL: 0
+;PCODE: $00000061 VOL: 0
+; 0000 005F 
+; 0000 0060             if (number > 10000){
+;PCODE: $00000062 VOL: 0
+;PCODE: $00000063 VOL: 0
+;PCODE: $00000064 VOL: 0
+; 0000 0061                 break;
+;PCODE: $00000065 VOL: 0
+; 0000 0062             }
+; 0000 0063 
+; 0000 0064             if (currenct_selected_button == 'c'){
+;PCODE: $00000066 VOL: 0
+;PCODE: $00000067 VOL: 0
+;PCODE: $00000068 VOL: 0
+;PCODE: $00000069 VOL: 0
+; 0000 0065                 currenct_operator = 'c';
+;PCODE: $0000006A VOL: 0
+;PCODE: $0000006B VOL: 0
+; 0000 0066                 oprand = 0;
+;PCODE: $0000006C VOL: 0
+;PCODE: $0000006D VOL: 0
+; 0000 0067                 number = 0;
+;PCODE: $0000006E VOL: 0
+;PCODE: $0000006F VOL: 0
+; 0000 0068                 lcd_clear();
+;PCODE: $00000070 VOL: 0
+; 0000 0069                 break;
+;PCODE: $00000071 VOL: 0
+; 0000 006A             }
+; 0000 006B 
+; 0000 006C             if (currenct_selected_button == '/' || currenct_selected_button == '*' || currenct_selected_button == '+' || currenct_selected_button == '-'){
+;PCODE: $00000072 VOL: 0
+;PCODE: $00000073 VOL: 0
+;PCODE: $00000074 VOL: 0
+;PCODE: $00000075 VOL: 0
+;PCODE: $00000076 VOL: 0
+;PCODE: $00000077 VOL: 0
+;PCODE: $00000078 VOL: 0
+;PCODE: $00000079 VOL: 0
+;PCODE: $0000007A VOL: 0
+;PCODE: $0000007B VOL: 0
+;PCODE: $0000007C VOL: 0
+;PCODE: $0000007D VOL: 0
+;PCODE: $0000007E VOL: 0
+;PCODE: $0000007F VOL: 0
+;PCODE: $00000080 VOL: 0
+; 0000 006D 
+; 0000 006E                 currenct_operator = currenct_selected_button;
+;PCODE: $00000081 VOL: 0
+;PCODE: $00000082 VOL: 0
+; 0000 006F                 oprand = number;
+;PCODE: $00000083 VOL: 0
+;PCODE: $00000084 VOL: 0
+; 0000 0070                 number = 0;
+;PCODE: $00000085 VOL: 0
+;PCODE: $00000086 VOL: 0
+; 0000 0071                 lcd_clear();
+;PCODE: $00000087 VOL: 0
+; 0000 0072                 break;
+;PCODE: $00000088 VOL: 0
+; 0000 0073             }
+; 0000 0074 
+; 0000 0075             if (currenct_selected_button == '='){
+;PCODE: $00000089 VOL: 0
+;PCODE: $0000008A VOL: 0
+;PCODE: $0000008B VOL: 0
+;PCODE: $0000008C VOL: 0
+; 0000 0076                 if (currenct_operator == '/'){
+;PCODE: $0000008D VOL: 0
+;PCODE: $0000008E VOL: 0
+;PCODE: $0000008F VOL: 0
+; 0000 0077                    number = div(oprand, number);
+;PCODE: $00000090 VOL: 0
+;PCODE: $00000091 VOL: 0
+;PCODE: $00000092 VOL: 0
+;PCODE: $00000093 VOL: 0
+;PCODE: $00000094 VOL: 0
+;PCODE: $00000095 VOL: 0
+; 0000 0078                    break;
+;PCODE: $00000096 VOL: 0
+; 0000 0079                 }
+; 0000 007A                 if (currenct_operator == '*'){
+;PCODE: $00000097 VOL: 0
+;PCODE: $00000098 VOL: 0
+;PCODE: $00000099 VOL: 0
+;PCODE: $0000009A VOL: 0
+; 0000 007B                    number = mul(oprand, number);
+;PCODE: $0000009B VOL: 0
+;PCODE: $0000009C VOL: 0
+;PCODE: $0000009D VOL: 0
+;PCODE: $0000009E VOL: 0
+;PCODE: $0000009F VOL: 0
+;PCODE: $000000A0 VOL: 0
+; 0000 007C                    break;
+;PCODE: $000000A1 VOL: 0
+; 0000 007D                 }
+; 0000 007E                 if (currenct_operator == '-'){
+;PCODE: $000000A2 VOL: 0
+;PCODE: $000000A3 VOL: 0
+;PCODE: $000000A4 VOL: 0
+;PCODE: $000000A5 VOL: 0
+; 0000 007F                    number = min(oprand, number);
+;PCODE: $000000A6 VOL: 0
+;PCODE: $000000A7 VOL: 0
+;PCODE: $000000A8 VOL: 0
+;PCODE: $000000A9 VOL: 0
+;PCODE: $000000AA VOL: 0
+;PCODE: $000000AB VOL: 0
+; 0000 0080                    break;
+;PCODE: $000000AC VOL: 0
+; 0000 0081                 }
+; 0000 0082                 if (currenct_operator == '+'){
+;PCODE: $000000AD VOL: 0
+;PCODE: $000000AE VOL: 0
+;PCODE: $000000AF VOL: 0
+;PCODE: $000000B0 VOL: 0
+; 0000 0083                    number = sum(oprand, number);
+;PCODE: $000000B1 VOL: 0
+;PCODE: $000000B2 VOL: 0
+;PCODE: $000000B3 VOL: 0
+;PCODE: $000000B4 VOL: 0
+;PCODE: $000000B5 VOL: 0
+;PCODE: $000000B6 VOL: 0
+; 0000 0084                    break;
+;PCODE: $000000B7 VOL: 0
+; 0000 0085                 }
+; 0000 0086 
+; 0000 0087             }
+;PCODE: $000000B8 VOL: 0
+; 0000 0088             if (index < 10){
+;PCODE: $000000B9 VOL: 0
+;PCODE: $000000BA VOL: 0
+;PCODE: $000000BB VOL: 0
+;PCODE: $000000BC VOL: 0
+; 0000 0089                 number = (number * 10) + index; //as we sorted the keys 0-9, now if the index is below 10 its the number actually.
+;PCODE: $000000BD VOL: 0
+;PCODE: $000000BE VOL: 0
+;PCODE: $000000BF VOL: 0
+;PCODE: $000000C0 VOL: 0
+;PCODE: $000000C1 VOL: 0
+; 0000 008A             }
+; 0000 008B         }
+;PCODE: $000000C2 VOL: 0
+; 0000 008C         index++;
+;PCODE: $000000C3 VOL: 0
+;PCODE: $000000C4 VOL: 0
+;PCODE: $000000C5 VOL: 0
+;PCODE: $000000C6 VOL: 0
+; 0000 008D     }
+;PCODE: $000000C7 VOL: 0
+;PCODE: $000000C8 VOL: 0
+; 0000 008E }
+;PCODE: $000000C9 VOL: 0
+;PCODE: $000000CA VOL: 0
+;
+;void update_lcd(void){
+; 0000 0090 void update_lcd(void){
+;PCODE: $000000CB VOL: 0
+;PCODE: $000000CC VOL: 0
+; 0000 0091     sprintf(printable_number, "%d", number);
+;PCODE: $000000CD VOL: 0
+;PCODE: $000000CE VOL: 0
+;PCODE: $000000CF VOL: 0
+;PCODE: $000000D0 VOL: 0
+;PCODE: $000000D1 VOL: 0
+;PCODE: $000000D2 VOL: 0
+;PCODE: $000000D3 VOL: 0
+;PCODE: $000000D4 VOL: 0
+;PCODE: $000000D5 VOL: 0
+;PCODE: $000000D6 VOL: 0
+;PCODE: $000000D7 VOL: 0
+;PCODE: $000000D8 VOL: 0
+; 0000 0092 
+; 0000 0093 }
+;PCODE: $000000D9 VOL: 0
+;PCODE: $000000DA VOL: 0
+;
+;void main(void)
+; 0000 0096 {
+;PCODE: $000000DB VOL: 0
+; 0000 0097 
+; 0000 0098 PORTA=0x00;
+;PCODE: $000000DC VOL: 0
+;PCODE: $000000DD VOL: 0
+; 0000 0099 DDRA=0x00;
+;PCODE: $000000DE VOL: 0
+;PCODE: $000000DF VOL: 0
+; 0000 009A 
+; 0000 009B PORTB=0x00;
+;PCODE: $000000E0 VOL: 0
+;PCODE: $000000E1 VOL: 0
+; 0000 009C DDRB=0x00;
+;PCODE: $000000E2 VOL: 0
+;PCODE: $000000E3 VOL: 0
+; 0000 009D 
+; 0000 009E PORTC=0x00;
+;PCODE: $000000E4 VOL: 0
+;PCODE: $000000E5 VOL: 0
+; 0000 009F DDRC=0xFF;
+;PCODE: $000000E6 VOL: 0
+;PCODE: $000000E7 VOL: 0
+; 0000 00A0 
+; 0000 00A1 PORTD=0x00;
+;PCODE: $000000E8 VOL: 0
+;PCODE: $000000E9 VOL: 0
+; 0000 00A2 DDRD=0x00;
+;PCODE: $000000EA VOL: 0
+;PCODE: $000000EB VOL: 0
+; 0000 00A3 
+; 0000 00A4 
+; 0000 00A5 TCCR0=0x00;
+;PCODE: $000000EC VOL: 0
+;PCODE: $000000ED VOL: 0
+; 0000 00A6 TCNT0=0x00;
+;PCODE: $000000EE VOL: 0
+;PCODE: $000000EF VOL: 0
+; 0000 00A7 OCR0=0x00;
+;PCODE: $000000F0 VOL: 0
+;PCODE: $000000F1 VOL: 0
+; 0000 00A8 
+; 0000 00A9 TCCR1A=0x00;
+;PCODE: $000000F2 VOL: 0
+;PCODE: $000000F3 VOL: 0
+; 0000 00AA TCCR1B=0x00;
+;PCODE: $000000F4 VOL: 0
+;PCODE: $000000F5 VOL: 0
+; 0000 00AB TCNT1H=0x00;
+;PCODE: $000000F6 VOL: 0
+;PCODE: $000000F7 VOL: 0
+; 0000 00AC TCNT1L=0x00;
+;PCODE: $000000F8 VOL: 0
+;PCODE: $000000F9 VOL: 0
+; 0000 00AD ICR1H=0x00;
+;PCODE: $000000FA VOL: 0
+;PCODE: $000000FB VOL: 0
+; 0000 00AE ICR1L=0x00;
+;PCODE: $000000FC VOL: 0
+;PCODE: $000000FD VOL: 0
+; 0000 00AF OCR1AH=0x00;
+;PCODE: $000000FE VOL: 0
+;PCODE: $000000FF VOL: 0
+; 0000 00B0 OCR1AL=0x00;
+;PCODE: $00000100 VOL: 0
+;PCODE: $00000101 VOL: 0
+; 0000 00B1 OCR1BH=0x00;
+;PCODE: $00000102 VOL: 0
+;PCODE: $00000103 VOL: 0
+; 0000 00B2 OCR1BL=0x00;
+;PCODE: $00000104 VOL: 0
+;PCODE: $00000105 VOL: 0
+; 0000 00B3 
+; 0000 00B4 ASSR=0x00;
+;PCODE: $00000106 VOL: 0
+;PCODE: $00000107 VOL: 0
+; 0000 00B5 TCCR2=0x00;
+;PCODE: $00000108 VOL: 0
+;PCODE: $00000109 VOL: 0
+; 0000 00B6 TCNT2=0x00;
+;PCODE: $0000010A VOL: 0
+;PCODE: $0000010B VOL: 0
+; 0000 00B7 OCR2=0x00;
+;PCODE: $0000010C VOL: 0
+;PCODE: $0000010D VOL: 0
+; 0000 00B8 
+; 0000 00B9 MCUCR=0x00;
+;PCODE: $0000010E VOL: 0
+;PCODE: $0000010F VOL: 0
+; 0000 00BA MCUCSR=0x00;
+;PCODE: $00000110 VOL: 0
+;PCODE: $00000111 VOL: 0
+; 0000 00BB 
+; 0000 00BC TIMSK=0x00;
+;PCODE: $00000112 VOL: 0
+;PCODE: $00000113 VOL: 0
+; 0000 00BD 
+; 0000 00BE UCSRB=0x00;
+;PCODE: $00000114 VOL: 0
+;PCODE: $00000115 VOL: 0
+; 0000 00BF 
+; 0000 00C0 ACSR=0x80;
+;PCODE: $00000116 VOL: 0
+;PCODE: $00000117 VOL: 0
+; 0000 00C1 SFIOR=0x00;
+;PCODE: $00000118 VOL: 0
+;PCODE: $00000119 VOL: 0
+; 0000 00C2 ADCSRA=0x00;
+;PCODE: $0000011A VOL: 0
+;PCODE: $0000011B VOL: 0
+; 0000 00C3 
+; 0000 00C4 SPCR=0x00;
+;PCODE: $0000011C VOL: 0
+;PCODE: $0000011D VOL: 0
+; 0000 00C5 
+; 0000 00C6 TWCR=0x00;
+;PCODE: $0000011E VOL: 0
+;PCODE: $0000011F VOL: 0
+; 0000 00C7 
+; 0000 00C8 lcd_init(16);
+;PCODE: $00000120 VOL: 0
+;PCODE: $00000121 VOL: 0
+;PCODE: $00000122 VOL: 0
+; 0000 00C9 
+; 0000 00CA 
+; 0000 00CB while (1)
+;PCODE: $00000123 VOL: 0
+; 0000 00CC       {
+; 0000 00CD 
+; 0000 00CE         read_key();
+;PCODE: $00000124 VOL: 0
+; 0000 00CF         update();
+;PCODE: $00000125 VOL: 0
+; 0000 00D0 
+; 0000 00D1         update_lcd();
+;PCODE: $00000126 VOL: 0
+; 0000 00D2 
+; 0000 00D3         lcd_gotoxy(0,0);
+;PCODE: $00000127 VOL: 0
+;PCODE: $00000128 VOL: 0
+;PCODE: $00000129 VOL: 0
+;PCODE: $0000012A VOL: 0
+;PCODE: $0000012B VOL: 0
+; 0000 00D4 
+; 0000 00D5         lcd_puts(printable_number);
+;PCODE: $0000012C VOL: 0
+;PCODE: $0000012D VOL: 0
+;PCODE: $0000012E VOL: 0
+; 0000 00D6       }
+;PCODE: $0000012F VOL: 0
+;PCODE: $00000130 VOL: 0
+; 0000 00D7 }
+;PCODE: $00000131 VOL: 0
+;PCODE: $00000132 VOL: 0
+;PCODE: $00000133 VOL: 0
+;
