@@ -1,2 +1,2 @@
 # AwesomeCalculator
-Simple calculator with CodeVisionAVR + Proteus circut
+Simple calculator with CodeVisionAVR + Proteus circuit
