@@ -1,5 +1,5 @@
 # AwesomeCalculator
-Simple calculator with CodeVisionAVR + Proteus circuit
+Simple calculator with CodeVisionAVR + Proteus circuit with ATMEGA16
 
 ## Circuit
 
